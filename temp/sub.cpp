@@ -2,20 +2,22 @@
 #include <algorithm>    // std::swap
 #include<string.h>
 using namespace std;
-string reverse(string str,int len){
-	int i;
+string reverse(string str){
+	int i,len;
+	len = str.size();
 	for(i=0;i<len/2;i++){
-		char t=str[i];
-		str[i]=str[len-1-i];
-		str[len-1-i]=t;
+		swap(str[i],str[len-i-1]);
 	}
 	return str;
 }
 string removeZero(string str){
-	for(int i=0;i<str.size();i++){
-		cout << str <<endl;
-		if(str[i]=='0'){
+	int i = 0;
+	while(i<str.size()){
+		//cout << str <<endl;
+		if(str[0]=='0'){
+		//		cout << str[i] << endl;
 			str.erase(str.begin()+i,str.begin()+i+1);
+		//	cout << "After erase" <<str <<endl;
 		}else{
 			break;
 		}
@@ -57,12 +59,13 @@ int main(){
 	len1 = x.size();
 	len2 = y.size();
 
-	cout << x <<endl;
-	cout << y <<endl;
+	//cout << x <<endl;
+	//cout << y <<endl;
 	// If Both are +ve then go for addition	
 	// If Both are -ve then also go for addition
 	// If one of them are -ve then go for subtraction
 	// Subtraction logic
+
 	int i,j,k;
 	int borrow=0;
 	char a, b;
@@ -98,8 +101,8 @@ int main(){
 		z = z + a;	
 	}
 
-	z = reverse(z,z.size());
+	z = reverse(z);
 	z = removeZero(z);
-	cout << z << endl;
+	cout << x[0] << z << endl;
 return 0;
 }
