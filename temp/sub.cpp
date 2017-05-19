@@ -1,7 +1,10 @@
-#include<iostream>
+#include <iostream>
+#include <string>
 #include <algorithm>    // std::swap
-#include<string.h>
+//#include "fun.h"
+#include "add.cpp"
 using namespace std;
+
 string reverse(string str){
 	int i,len;
 	len = str.size();
@@ -10,6 +13,7 @@ string reverse(string str){
 	}
 	return str;
 }
+
 string removeZero(string str){
 	int i = 0;
 	while(i<str.size()){
@@ -22,11 +26,14 @@ string removeZero(string str){
 			break;
 		}
 	}
-return str;
+	return str;
 }
+
+/*void subtraction(string x,string y){*/
 int main(){
 	unsigned long long len1,len2;
-	string x,y,z;
+	string z;
+	string x,y;
 	cin >> x >> y;
 		// calculate output sign
 	if(x[0]!='+' && x[0]!='-'){
@@ -72,37 +79,41 @@ int main(){
 	i = len1-1;
 	j = len2-1;
 	k = 0;
-	while(j>0){
-		a = x[i];		
-		b = y[j];
-		if(a < b){
-			y[j-1] += 1;
-			a += 10;
-			if(j==1){
-				borrow = 1;
+	if((x[0]=='+' && y[0]=='+')|| (x[0]=='-' && y[0]=='-')){
+		addition(num1,num2);
+	}
+	else{
+		while(j>0){
+			a = x[i];		
+			b = y[j];
+			if(a < b){
+				y[j-1] += 1;
+				a += 10;
+				if(j==1){
+					borrow = 1;
+				}
 			}
+			a = a - b + '0';
+			z = z + a;
+			//cout << a << endl;
+			i--;
+			j--;
 		}
-		a = a - b + '0';
-		z = z + a;
-		//cout << a << endl;
-		i--;
-		j--;
-	}
-	while(i>0){
-		a = x[i--];
-		if(borrow){
-			if(a=='0'){
-				a = '9';
-			}else{
-				a = a - 1;			
-				borrow = 0;
-			}
-		}	
-		z = z + a;	
-	}
+		while(i>0){
+			a = x[i--];
+			if(borrow){
+				if(a=='0'){
+					a = '9';
+				}else{
+					a = a - 1;			
+					borrow = 0;
+				}
+			}	
+			z = z + a;	
+		}
 
-	z = reverse(z);
-	z = removeZero(z);
-	cout << x[0] << z << endl;
-return 0;
+		z = reverse(z);
+		z = removeZero(z);
+		cout << x[0] << z << endl;
+	}
 }
