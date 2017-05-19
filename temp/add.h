@@ -1,28 +1,11 @@
 #include <iostream>
 #include <string>
 #include <algorithm>    // std::swap
-//#include "sub.cpp"
+#include "fun.h"
+#include "sub.cpp"
 using namespace std;
 
-string reverse(string str){
-	int i,len;
-	len = str.size();
-	for(i=0;i<len/2;i++){
-		swap(str[i],str[len-i-1]);
-	}
-	return str;
-}
-
-void print(string str){
-	int len=str.length();
-	for(int i=0;i<len;i++)
-		cout << str[i];
-}
-
 void addition(string num1,string num2){
-/*int main(){
-	string num1,num2;
-	cin >> num1 >> num2;*/
 	int len1=num1.length(),i=0,a,len2=num2.length(),rem=0,s1=1,s2=1,r_sign=1;
 	if(len1==len2){
 		int i,j;
@@ -51,8 +34,8 @@ void addition(string num1,string num2){
 	if(len1>len2){
 		if(s1==-1)
 			cout << "-";
-		/*else
-			cout << "+";*/
+		else
+			cout << "+";
 		if(s1*s2>0){
 			for(i=0;i<len2;i++){
 				a=(num1[i]-'0')+(num2[i]-'0')+rem;
@@ -78,8 +61,8 @@ void addition(string num1,string num2){
 	else if(len1<len2){
 		if(s1==-1)
 			cout << "+";
-		/*else
-			cout << "-";*/
+		else
+			cout << "-";
 		if(s1*s2>0){
 			for(i=0;i<len1;i++){
 				a=(num1[i]-'0')+(num2[i]-'0')+rem;
@@ -119,5 +102,4 @@ void addition(string num1,string num2){
 			subtraction(num1,num2);
 		}
 	}
-//	return 0;
 }

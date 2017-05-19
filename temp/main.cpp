@@ -2,8 +2,8 @@
 #include <algorithm>    // std::swap
 #include <string.h>
 #include "fun.h"
-#include "1.cpp"
-#include "add.cpp"
+#include "mul.h"
+#include "add.h"
 #include "sub.h"
 using namespace std;
 
@@ -17,17 +17,15 @@ int main(){
 		cout << "1. Addition\n2. Subtraction\n3. Multiplication\n4. Exit\n";
 		cout << "Enter your choice : ";
 		cin >> option;
+		cin >> num1 >> num2;
 		switch(option){
 			case 1:
-				cin >> num1 >> num2;
 				addition(num1,num2);
 			break;
 			case 2:
-				cin >> num1 >> num2;
 				multiplication(num1,num2);
 			break;
 			case 3:
-				cin >> num1 >> num2;
 				subtraction(num1,num2);
 			break;
 			case 4:			

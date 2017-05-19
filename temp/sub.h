@@ -1,40 +1,13 @@
 #include <iostream>
 #include <string>
 #include <algorithm>    // std::swap
-//#include "fun.h"
+#include "fun.h"
 #include "add.cpp"
 using namespace std;
 
-string reverse(string str){
-	int i,len;
-	len = str.size();
-	for(i=0;i<len/2;i++){
-		swap(str[i],str[len-i-1]);
-	}
-	return str;
-}
-
-string removeZero(string str){
-	int i = 0;
-	while(i<str.size()){
-		//cout << str <<endl;
-		if(str[0]=='0'){
-		//		cout << str[i] << endl;
-			str.erase(str.begin()+i,str.begin()+i+1);
-		//	cout << "After erase" <<str <<endl;
-		}else{
-			break;
-		}
-	}
-	return str;
-}
-
-/*void subtraction(string x,string y){*/
-int main(){
+void subtraction(string x,string y){
 	unsigned long long len1,len2;
 	string z;
-	string x,y;
-	cin >> x >> y;
 		// calculate output sign
 	if(x[0]!='+' && x[0]!='-'){
 		x = '+'+x;

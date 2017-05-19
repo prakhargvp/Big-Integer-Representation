@@ -1,24 +1,8 @@
-/*#include <iostream>
+#include <iostream>
 #include <string>
 #include <algorithm>
 using namespace std;
-
-string reverse(string str){
-	int i,len=str.size();
-	for(i=0;i<len/2;i++)
-		swap(str[i],str[len-1-i]);
-	return str;
-}
-
-void print(string str,int len){
-	for(int i=0;i<len;i++)
-		cout << str[i];
-}*/
-
 void multiplication(string num1,string num2){
-/*int main(){
-	string num1,num2;
-	cin >> num1 >> num2;*/
 	int s1=1,s2=1;
 	if(num1[0]=='-'){
 		s1=-1;
