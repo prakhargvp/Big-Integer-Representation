@@ -80,7 +80,7 @@ int main(){
 	j = len2-1;
 	k = 0;
 	if((x[0]=='+' && y[0]=='+')|| (x[0]=='-' && y[0]=='-')){
-		addition(num1,num2);
+		addition(x,y);
 	}
 	else{
 		while(j>0){
