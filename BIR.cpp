@@ -48,6 +48,7 @@ string BIR::getNum2(){
 	return n2;
 }
 void BIR::read(string str){
+
 	split(str);
 }
 
@@ -60,4 +61,25 @@ void BIR::split(string str){
 }
 bool BIR::validation(){
 
+}
+// Addition Function
+void BIR::addition(){
+	n1 = "+12311231231";
+	n2 = "+12312313";
+	// Addition Logic goes here
+	
+}
+// Multiplication Function
+void BIR::multiplication(){
+	n1 = "-12311231231";
+	n2 = "+12312313";
+	// Multiplication Logic goes here
+	
+}
+// Subtraction Function
+void BIR::subtraction(){
+	n1 = "+12311231231";
+	n2 = "-12312313";
+	// Subtraction Logic goes here
+	
 }
