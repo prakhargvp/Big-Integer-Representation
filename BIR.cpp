@@ -144,11 +144,10 @@ void BIR::subtraction(){
 	if(n1.length()<n2.length())
 		swap(n1,n2);
 	else if(n1.size()==n2.size()){
-		int i,j;
 		i = 1;
 		while(n1[i]==n2[i] && i<n2.size())
 			i++;
-		if(n1[i]<n2[j]){
+		if(n1[i]<n2[i]){
 			// Code for swap
 			// n1 is greater & n2 is smaller
 			swap(n1,n2);	
