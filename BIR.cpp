@@ -68,18 +68,18 @@ bool BIR::validation(){
 void BIR::addition(){
 	n1 = "+12311231231";
 	n2 = "+12312313";
-	// Addition Logic goes here
-	char ch;
-	int i,rem=0,len1,len2;
+// Addition Logic goes here
+	char ch1,ch2,ch;
+	int rem=0;
 	if(n1.length()<n2.length())
 		swap(n1,n2);
 	if((n1[0]=='+' && n2[0]='-')||(n1[0]=='-' && n2[0]='+'))
 		subtraction();
-	else{
-		len1=n1.length();
-		len2=n2.length();
-		for(i=len2-1;i>0;i--){
-			ch=n1[i]+n2[i]-'0'+rem;
+	else{		
+		while(n2.length()!=1){
+			ch1=n1.back();
+			ch2=n2.back();
+			ch=ch1+ch2-'0'+rem;
 			if(ch>'9'){
 				rem=1;
 				ch-=10;
@@ -87,17 +87,19 @@ void BIR::addition(){
 			else rem=0;
 			//cout << ch << " ";
 			ans+=ch;
+			n1.pop_back();
+			n2.pop_back();
 		}
-		if(len1>len2){
-			i=len1-len2;
-			while(i>0){
-				if(n1[i]=='9' && rem==1)
+		if(n1.length()!=n2.length()){
+			while(n1.length()!=1){
+				ch=n1.back();
+				if(ch=='9' && rem==1)
 					ans+='0';
 				else{
-					ans+=n1[i]+rem;
+					ans+=ch+rem;
 					rem=0;	
 				}
-				--i;	
+				n1.pop_back();
 			}
 		}
 		if(rem!=0)
