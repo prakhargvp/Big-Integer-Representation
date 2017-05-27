@@ -1,14 +1,8 @@
 #include <iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
-string reverse(string str){
-	int i,len;
-	len = str.size();
-	for(i=0;i<len/2;i++){
-		swap(str[i],str[len-i-1]);
-	}
-	return str;
-}
+
 
 string removeZero(string str){
 	int i = 0;
@@ -108,7 +102,7 @@ void subtraction(string x,string y){
 			--itx;
 		}
 
-		z = reverse(z);
+		reverse(z.begin(),z.end());
 		z = removeZero(z);
 		cout << x[0] << z << endl;
 	}

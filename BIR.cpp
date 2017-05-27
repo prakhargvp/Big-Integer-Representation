@@ -1,4 +1,5 @@
 #include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 class BIR{
 	private: 
@@ -24,7 +25,7 @@ class BIR{
 	void read(string);
 	void read(string,string);
 	// To Trim Zero's from the front of answer
-	string removeZero(string)
+	string removeZero(string);
 	// To return output result
 	string output();
 	//
@@ -66,46 +67,6 @@ bool BIR::validation(){
 }
 // Addition Function
 void BIR::addition(){
-	n1 = "+12311231231";
-	n2 = "+12312313";
-	// Addition Logic goes here
-	char ch;
-	int i,rem=0,len1,len2;
-	if(n1.length()<n2.length())
-		swap(n1,n2);
-	if((n1[0]=='+' && n2[0]='-')||(n1[0]=='-' && n2[0]='+'))
-		subtraction();
-	else{
-		len1=n1.length();
-		len2=n2.length();
-		for(i=len2-1;i>0;i--){
-			ch=n1[i]+n2[i]-'0'+rem;
-			if(ch>'9'){
-				rem=1;
-				ch-=10;
-			}
-			else rem=0;
-			//cout << ch << " ";
-			ans+=ch;
-		}
-		if(len1>len2){
-			i=len1-len2;
-			while(i>0){
-				if(n1[i]=='9' && rem==1)
-					ans+='0';
-				else{
-					ans+=n1[i]+rem;
-					rem=0;	
-				}
-				--i;	
-			}
-		}
-		if(rem!=0)
-			ans+='1';
-		reverse(ans.begin(),ans.end());
-		ans=n1[0]+ans;
-		cout << ans;
-	}
 }
 
 string BIR::removeZero(string str){
@@ -134,50 +95,77 @@ void BIR::multiplication(){
 void BIR::subtraction(){
 	n1 = "+12311231231";
 	n2 = "-12312313";
-	// Subtraction Logic goes here
-	char a, b;
-	int carry=0,len1,len2,i,j,k=0,borrow=0;
-	if(n2[0]=='+')
-		n2[0]='-';
-	else
-		n2[0]='+';
-	if(n1.length()<n2.length())
+
+	// [0] for sign
+	string::iterator itx=n1.begin() + 1;
+	string::iterator ity=n2.begin() + 1;
+
+	// calculate output sign
+	if(n1[0]!='+' && n1[0]!='-'){
+		n1 = '+' + n1;
+	}
+	if(n2[0]!='+' && n2[0]!='-'){
+		n2 = '-' + n2;
+	}
+	/*
+	else if(n2[0] == '-'){
+		n2[0] = '+';
+	}
+	*/
+	// x is greater or equal to y
+	// swap if x is smaller
+	if(n2.size()>n1.size()){
 		swap(n1,n2);
-	else if(n1.size()==n2.size()){
-		i = 1;
-		while(n1[i]==n2[i] && i<n2.size())
-			i++;
-		if(n1[i]<n2[i]){
+	}else if(n1.size()==n2.size()){
+		
+		while(*itx == *ity && itx!=n1.end()){
+			itx++;
+			ity++;
+		}
+		if(*itx < *ity){
 			// Code for swap
-			// n1 is greater & n2 is smaller
+			// x is greater & y is smaller
 			swap(n1,n2);	
 		}
 	}
-	len1=n1.length();
-	len2=n2.length();
-	i = len1-1;
-	j = len2-1;
-	if((n1[0]=='+' && n2[0]=='+')||(n1[0]=='-' && n2[0]=='-'))
-		addition();
+
+	//cout << x <<endl;
+	//cout << y <<endl;
+	// If Both are +ve then go for addition	
+	// If Both are -ve then also go for addition
+	// If one of them are -ve then go for subtraction
+	// Subtraction logic
+
+	int borrow=0;
+	char a, b;
+	
+	itx = n1.end() - 1;
+	ity = n2.end() - 1;
+
+	if((n1[0]=='+' && n2[0]=='+')|| (n1[0]=='-' && n2[0]=='-')){
+		cout << "Addition Code" << endl;
+	}
 	else{
-		while(j>0){
-			a = n1[i];		
-			b = n2[j];
+		while(ity!=n2.begin()){
+
+			b = (*ity);
+			a = (*itx);		
+
 			if(a < b){
-				n2[j-1] += 1;
+				*(ity - 1) += 1;
 				a += 10;
-				if(j==1){
+				if(ity == n2.begin()+1){
 					borrow = 1;
 				}
 			}
 			a = a - b + '0';
-			ans += a;
-			//cout << a << endl;
-			i--;
-			j--;
+			res = res + a;
+
+			--itx;
+			--ity;
 		}
-		while(i>0){
-			a = n1[i--];
+		while(itx!=n1.begin()){
+			a = *itx;
 			if(borrow){
 				if(a=='0'){
 					a = '9';
@@ -186,10 +174,12 @@ void BIR::subtraction(){
 					borrow = 0;
 				}
 			}	
-			ans += a;	
+			res = res + a;	
+			--itx;
 		}
+
+		reverse(res.begin(),res.end());
+		res = removeZero(res);
+		cout << n1[0] << res << endl;
 	}
-	reverse(ans.begin(),ans.end());	
-	ans = removeZero(ans);
-	cout << n1[0] << ans << endl;
 }
