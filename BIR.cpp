@@ -67,6 +67,48 @@ bool BIR::validation(){
 }
 // Addition Function
 void BIR::addition(){
+	n1 = "+12311231231";
+	n2 = "+12312313";
+// Addition Logic goes here
+	char ch1,ch2,ch;
+	int rem=0;
+	if(n1.length()<n2.length())
+		swap(n1,n2);
+	if((n1[0]=='+' && n2[0]=='-')||(n1[0]=='-' && n2[0]=='+'))
+		subtraction();
+	else{		
+		while(n2.length()!=1){
+			ch1=n1.back();
+			ch2=n2.back();
+			ch=ch1+ch2-'0'+rem;
+			if(ch>'9'){
+				rem=1;
+				ch-=10;
+			}
+			else rem=0;
+			//cout << ch << " ";
+			res+=ch;
+			n1.pop_back();
+			n2.pop_back();
+		}
+		if(n1.length()!=n2.length()){
+			while(n1.length()!=1){
+				ch=n1.back();
+				if(ch=='9' && rem==1)
+					res+='0';
+				else{
+					res+=ch+rem;
+					rem=0;	
+				}
+				n1.pop_back();
+			}
+		}
+		if(rem!=0)
+			res+='1';
+		reverse(res.begin(),res.end());
+		res=n1[0]+res;
+		cout << res;
+	}
 }
 
 string BIR::removeZero(string str){
