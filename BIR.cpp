@@ -126,6 +126,18 @@ void BIR::resolveSign(){
 	n2 = resolveSign(n2);
 }
 string BIR::resolveSign(string str){
+	string::iterator it1;
+	it1 = str.begin();
+	char op1='+';
+	while(it1!=str.end() && (*it1=='+' || *it1=='-')){
+		if((*it1=='-' || op1=='+') || (*it1=='+' || op1=='-')){
+			op1 = '-';	
+		}else{
+			op1 = '+';
+		}	
+		it1++;
+	}
+	str = op1 + string(it1, str.end());
 return str;
 }
 // Result
