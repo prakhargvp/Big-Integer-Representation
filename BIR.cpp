@@ -192,8 +192,7 @@ void BIR::addition(){
 	// Addition Logic goes here
 	char ch1,ch2,ch;
 	int rem=0;
-		string::iterator itx=n1.end()-1;
-		string::iterator ity=n2.end()-1;
+		string::iterator itx=n1.end()-1,ity=n2.end()-1;
 		while(ity!=n2.begin()){
 			ch1=(*itx);
 			ch2=(*ity);
@@ -247,11 +246,11 @@ void BIR::multiplication(){
 		count++;
 	if(n2[0]=='+')
 		count++;
-	string::iterator itx=n1.end()-1,itz1,itz2;
+	string::iterator itx=n1.end()-1,itz1,itz2,ity,it;
 	int a,b,pro,carry1=0,carry2=0;
 	while(itx!=n1.begin()){
 		a=(*itx)-'0';
-		string::iterator ity=n2.end()-1;
+		ity=n2.end()-1;
 		while(ity!=n2.begin()){
 			b=(*ity)-'0';
 			pro=a*b+carry1;			
@@ -283,7 +282,7 @@ void BIR::multiplication(){
 			++itz1;
 			--ity;
 		}
-		string::iterator it=itz1;
+		it=itz1;
 		while(carry1){
 			res+=(carry1%10)+'0';
 			carry1/=10;
@@ -319,8 +318,7 @@ void BIR::multiplication(){
 }
 void BIR::firstBig(){
 	try{
-		string::iterator itx=n1.begin() + 1;
-		string::iterator ity=n2.begin() + 1;
+		string::iterator itx=n1.begin() + 1,ity=n2.begin() + 1;
 
 		if(n2.size()>n1.size()){
 			swap(n1,n2);
@@ -346,8 +344,7 @@ void BIR::subtraction(){
 	int borrow=0;
 	char a, b;
 	
-		string::iterator itx=n1.end() - 1;
-		string::iterator ity=n2.end() - 1;
+		string::iterator itx=n1.end() - 1,ity=n2.end() - 1;
 
 		while(ity!=n2.begin()){
 
