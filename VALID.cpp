@@ -9,29 +9,43 @@ class VALID{
 		// regex reg1(regex_str, regex_constants::icase);
 	}	
 	// isNumber
-	int is_match(regex reg,string str){
-		if(regex_match(str,reg)){
+	template <typename T>
+	int is_match(regex reg,T str){
+		string S;
+		//S = to_string(str);
+		S = str;
+		if(regex_match(S,reg)){
 			return 1;
 		}else{
 			return 0;
 		}
 
 	}
-	int isNumber(string str){
+
+	template <typename T>
+	int isOperator(T str){
+		regex reg("[*+-/]");
+		return is_match<T>(reg,str);
+	}
+	
+	template <typename T>
+	int isNumber(T str){
 		regex reg("[0-9]*");
-		return is_match(reg,str);
+		return is_match<T>(reg,str);
 	}
 
-	int isMultiSignNumber(string str){
+	template <typename T>
+	int isMultiSignNumber(T str){
 		regex reg("[+-]*[0-9]*");	
-		return is_match(reg,str);
+		return is_match<T>(reg,str);
 	}
 	// 123*1231 = true
 	// ++--12312/+++123 = true
 
-	int isMultiSignWithOperation(string str){
+	template <typename T>
+	int isMultiSignWithOperation(T str){
 		regex reg("[+-]*[0-9]*[*/+-][+-]*[0-9]*");	
-		return is_match(reg,str);
+		return is_match<T>(reg,str);
 	}
 };
 /*

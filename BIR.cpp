@@ -1,16 +1,20 @@
 #include<iostream>
 #include<bits/stdc++.h>
+#include "VALID.cpp"
 using namespace std;
 class BIR{
 	private: 
 	string n1,n2,res;
-	char op;	// operation
+	string op;	// operation
+	int e;
+	VALID val;
 	public:
 	// Declaration
 	// Constructor
 	BIR(){
 		n1 = n2 = res = "";
 		op = '+';
+		VALID valObj;
 	}
 	BIR(string str){
 		// To split str into 2 numbers	
@@ -22,18 +26,22 @@ class BIR{
 		op = '+';
 	}
 	// To read input from main
-	void read(string);
-	void read(string,string);
+	int read(string);
+	int read(string,string,string);
 	// To Trim Zero's from the front of answer
 	string removeZero(string);
 	// To return output result
-	string output();
+	string result();
 	//
 	void initOperation();		
 	//
 	void split(string);
 	//
 	bool validation();
+	// Resolve Sign
+	string resolveSign(string);
+	//
+	void operation(string);
 	//
 	void addition();
 	//
@@ -50,9 +58,16 @@ string BIR::getNum1(){
 string BIR::getNum2(){
 	return n2;
 }
-void BIR::read(string str){
+int BIR::read(string str){
 
-	split(str);
+	try{
+		if(!val.isMultiSignWithOperation(str)){throw 0;}
+		split(str);
+	}catch(int e){
+		cout << "Invalid String :" << endl;	
+		return 0;
+	}
+return 1;
 }
 
 void BIR::initOperation(){
@@ -61,9 +76,54 @@ void BIR::initOperation(){
 }
 void BIR::split(string str){
 	// split number1 operation number2
+	string::iterator it1= str.begin();
+	VALID val;
+	// 1 2 3
+	int flag=1;
+	n1 = n2 = "";
+	while(it1!=str.end()){
+		if(flag==1){
+			n1 += *it1;	
+		}else if(flag==2){
+			op = *it1;		
+			flag = 3;
+		}else if(flag==3){
+			n2 += *it1;	
+		}
+		if(val.isNumber(*it1)==1 && val.isOperator(*(it1+1))==1){
+			flag = 2;
+		}
+		// Copy the content in the respective string/variable
+		it1++;
+	}
 }
 bool BIR::validation(){
 
+}
+// Operation
+void BIR::operation(string opr){
+	op = opr;
+}
+//
+string resolveSign(string str){
+}
+// Result
+string BIR::result(){
+	try{
+		if(op=="-"){
+			subtraction();
+		}else if(op=="+"){
+			addition();
+		}else if(op=="*"){
+			multiplication();
+		}else{
+			throw 0;
+
+		}
+	}catch(int e){
+		cout << "No Operation Selected." << endl;	
+	}
+	return res;
 }
 // Addition Function
 void BIR::addition(){
@@ -222,6 +282,6 @@ void BIR::subtraction(){
 
 		reverse(res.begin(),res.end());
 		res = removeZero(res);
-		cout << n1[0] << res << endl;
+		res =  n1[0] + res;
 	}
 }
