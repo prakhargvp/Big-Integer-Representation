@@ -137,9 +137,11 @@ void BIR::addition(){
 	if((n1[0]=='+' && n2[0]=='-')||(n1[0]=='-' && n2[0]=='+'))
 		subtraction();
 	else{		
-		while(n2.length()!=1){
-			ch1=n1.back();
-			ch2=n2.back();
+		string::iterator itx=n1.end()-1;
+		string::iterator ity=n2.end()-1;
+		while(ity!=n2.begin()){
+			ch1=(*itx);
+			ch2=(*ity);
 			ch=ch1+ch2-'0'+rem;
 			if(ch>'9'){
 				rem=1;
@@ -148,20 +150,18 @@ void BIR::addition(){
 			else rem=0;
 			//cout << ch << " ";
 			res+=ch;
-			n1.pop_back();
-			n2.pop_back();
+			--itx;
+			--ity;
 		}
-		if(n1.length()!=n2.length()){
-			while(n1.length()!=1){
-				ch=n1.back();
-				if(ch=='9' && rem==1)
-					res+='0';
-				else{
-					res+=ch+rem;
-					rem=0;	
-				}
-				n1.pop_back();
+		while(itx!=n1.begin()){
+			ch=(*itx);
+			if(ch=='9' && rem==1)
+				res+='0';
+			else{
+				res+=ch+rem;
+				rem=0;	
 			}
+			--itx;
 		}
 		if(rem!=0)
 			res+='1';
