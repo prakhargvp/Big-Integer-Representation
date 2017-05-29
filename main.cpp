@@ -1,4 +1,3 @@
-
 #include<iostream>
 #include "BIR.cpp"
 using namespace std;

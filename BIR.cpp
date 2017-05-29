@@ -1,13 +1,15 @@
 #include<iostream>
 #include<bits/stdc++.h>
+#include "CONTROL.cpp"
 #include "VALID.cpp"
+#include "ERRORH.cpp"
 using namespace std;
 class BIR{
 	private: 
 	string n1,n2,res;
 	string op;	// operation
 	int e;
-	VALID val;
+	VALID val;	// Validation Object
 	public:
 	// Declaration
 	// Constructor
@@ -39,6 +41,8 @@ class BIR{
 	//
 	bool validation();
 	// Resolve Sign
+
+	void resolveSign();
 	string resolveSign(string);
 	//
 	void operation(string);
@@ -58,13 +62,25 @@ string BIR::getNum1(){
 string BIR::getNum2(){
 	return n2;
 }
+
+int BIR::read(string str1,string str2,string op1){
+	val.isMultiSignNumber(str1);	
+	val.isMultiSignNumber(str2);	
+	val.isOperator(op1);
+}
 int BIR::read(string str){
 
 	try{
-		if(!val.isMultiSignWithOperation(str)){throw 0;}
+		if(!val.isMultiSignWithOperation(str)){
+			throw ERRORH("Not Valid String : ");
+		}
+		// split string into 3 strings
+		// number1 operation number2
 		split(str);
-	}catch(int e){
-		cout << "Invalid String :" << endl;	
+		// Resolve precedign sign in number
+		resolveSign();
+	}catch(ERRORH err){
+		err.print();
 		return 0;
 	}
 return 1;
@@ -105,7 +121,12 @@ void BIR::operation(string opr){
 	op = opr;
 }
 //
-string resolveSign(string str){
+void BIR::resolveSign(){
+	n1 = resolveSign(n1);
+	n2 = resolveSign(n2);
+}
+string BIR::resolveSign(string str){
+return str;
 }
 // Result
 string BIR::result(){
