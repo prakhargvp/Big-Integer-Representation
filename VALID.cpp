@@ -30,13 +30,13 @@ class VALID{
 	
 	template <typename T>
 	int isNumber(T str){
-		regex reg("[0-9]*");
+		regex reg("[0-9]+");
 		return is_match<T>(reg,str);
 	}
 
 	template <typename T>
 	int isMultiSignNumber(T str){
-		regex reg("[+-]*[0-9]*");	
+		regex reg("[+-]*[0-9]+");	
 		return is_match<T>(reg,str);
 	}
 	// 123*1231 = true
@@ -44,7 +44,7 @@ class VALID{
 
 	template <typename T>
 	int isMultiSignWithOperation(T str){
-		regex reg("[+-]*[0-9]*[*/+-][+-]*[0-9]*");	
+		regex reg("[+-]*[0-9]+[*/+-][+-]*[0-9]+");	
 		return is_match<T>(reg,str);
 	}
 };
