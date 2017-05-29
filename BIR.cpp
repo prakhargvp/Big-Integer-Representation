@@ -44,6 +44,8 @@ class BIR{
 
 	void resolveSign();
 	string resolveSign(string);
+	//o
+	void firstBig();
 	//
 	void operation(string);
 	//
@@ -64,9 +66,24 @@ string BIR::getNum2(){
 }
 
 int BIR::read(string str1,string str2,string op1){
-	val.isMultiSignNumber(str1);	
-	val.isMultiSignNumber(str2);	
-	val.isOperator(op1);
+	try{
+		if(!val.isMultiSignNumber(str1)){
+			throw ERRORH("Str1 is Not Valid");	
+		}	
+		if(!val.isMultiSignNumber(str2)){
+			throw ERRORH("Str2 is Not Valid");	
+		}
+		if(val.isOperator(op1)){
+			throw ERRORH("Operator is not Valid");	
+		}
+		//1. validation
+		//2. resolve sign
+		//3. first numebr is greate or equal to second
+		initOperation();
+
+	}catch(ERRORH err){
+		err.print();	
+	}
 }
 int BIR::read(string str){
 
@@ -77,8 +94,10 @@ int BIR::read(string str){
 		// split string into 3 strings
 		// number1 operation number2
 		split(str);
-		// Resolve precedign sign in number
-		resolveSign();
+		//1. validation
+		//2. resolve sign
+		//3. first numebr is greate or equal to second
+		initOperation();
 	}catch(ERRORH err){
 		err.print();
 		return 0;
@@ -88,7 +107,11 @@ return 1;
 
 void BIR::initOperation(){
 	// Validity of Number
+	validation();
 	// resolve the signs
+	resolveSign();
+	// first number be greate than or equal to second one
+	firstBig();
 }
 void BIR::split(string str){
 	// split number1 operation number2
@@ -130,7 +153,8 @@ string BIR::resolveSign(string str){
 	it1 = str.begin();
 	char op1='+';
 	while(it1!=str.end() && (*it1=='+' || *it1=='-')){
-		if((*it1=='-' || op1=='+') || (*it1=='+' || op1=='-')){
+
+		if((*it1=='-' && op1=='+') || (*it1=='+' && op1=='-')){
 			op1 = '-';	
 		}else{
 			op1 = '+';
@@ -143,33 +167,31 @@ return str;
 // Result
 string BIR::result(){
 	try{
-		if(op=="-"){
+		int ms=0;
+		if(op=="-"){	ms++;	}
+		if(n2[0]=='-'){	ms++;	}
+		if(n1[0]=='-'){	ms++;	}
+
+		if((op=="+" || op=="-" ) && ms%2!=0){
 			subtraction();
-		}else if(op=="+"){
+		}else if(op=="+" || op=="-"){
 			addition();
 		}else if(op=="*"){
 			multiplication();
 		}else{
-			throw 0;
+			throw ERRORH("No Operation is Selected.");
 
 		}
-	}catch(int e){
-		cout << "No Operation Selected." << endl;	
+	}catch(ERRORH err){
+		err.print();
 	}
 	return res;
 }
 // Addition Function
 void BIR::addition(){
-	n1 = "+12311231231";
-	n2 = "+12312313";
-// Addition Logic goes here
+	// Addition Logic goes here
 	char ch1,ch2,ch;
 	int rem=0;
-	if(n1.length()<n2.length())
-		swap(n1,n2);
-	if((n1[0]=='+' && n2[0]=='-')||(n1[0]=='-' && n2[0]=='+'))
-		subtraction();
-	else{		
 		string::iterator itx=n1.end()-1;
 		string::iterator ity=n2.end()-1;
 		while(ity!=n2.begin()){
@@ -200,8 +222,6 @@ void BIR::addition(){
 			res+='1';
 		reverse(res.begin(),res.end());
 		res=n1[0]+res;
-		cout << res;
-	}
 }
 
 string BIR::removeZero(string str){
@@ -221,66 +241,41 @@ string BIR::removeZero(string str){
 
 // Multiplication Function
 void BIR::multiplication(){
-	n1 = "-12311231231";
-	n2 = "+12312313";
 	// Multiplication Logic goes here
 	
 }
+void BIR::firstBig(){
+	try{
+		string::iterator itx=n1.begin() + 1;
+		string::iterator ity=n2.begin() + 1;
+
+		if(n2.size()>n1.size()){
+			swap(n1,n2);
+		}else if(n1.size()==n2.size()){
+			
+			while(*itx == *ity && itx!=n1.end()){
+				itx++;
+				ity++;
+			}
+			if(*itx < *ity){
+				// Code for swap
+				// x is greater & y is smaller
+				swap(n1,n2);	
+			}
+		}
+	}catch(...){
+	
+	}
+}
 // Subtraction Function
 void BIR::subtraction(){
-	n1 = "+12311231231";
-	n2 = "-12312313";
-
-	// [0] for sign
-	string::iterator itx=n1.begin() + 1;
-	string::iterator ity=n2.begin() + 1;
-
-	// calculate output sign
-	if(n1[0]!='+' && n1[0]!='-'){
-		n1 = '+' + n1;
-	}
-	if(n2[0]!='+' && n2[0]!='-'){
-		n2 = '-' + n2;
-	}
-	/*
-	else if(n2[0] == '-'){
-		n2[0] = '+';
-	}
-	*/
-	// x is greater or equal to y
-	// swap if x is smaller
-	if(n2.size()>n1.size()){
-		swap(n1,n2);
-	}else if(n1.size()==n2.size()){
-		
-		while(*itx == *ity && itx!=n1.end()){
-			itx++;
-			ity++;
-		}
-		if(*itx < *ity){
-			// Code for swap
-			// x is greater & y is smaller
-			swap(n1,n2);	
-		}
-	}
-
-	//cout << x <<endl;
-	//cout << y <<endl;
-	// If Both are +ve then go for addition	
-	// If Both are -ve then also go for addition
-	// If one of them are -ve then go for subtraction
-	// Subtraction logic
 
 	int borrow=0;
 	char a, b;
 	
-	itx = n1.end() - 1;
-	ity = n2.end() - 1;
+		string::iterator itx=n1.end() - 1;
+		string::iterator ity=n2.end() - 1;
 
-	if((n1[0]=='+' && n2[0]=='+')|| (n1[0]=='-' && n2[0]=='-')){
-		cout << "Addition Code" << endl;
-	}
-	else{
 		while(ity!=n2.begin()){
 
 			b = (*ity);
@@ -316,5 +311,4 @@ void BIR::subtraction(){
 		reverse(res.begin(),res.end());
 		res = removeZero(res);
 		res =  n1[0] + res;
-	}
 }

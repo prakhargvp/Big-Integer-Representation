@@ -6,7 +6,7 @@ int main(){
 	string str;
 	cin >> str;
 	if(obj1.read(str)){
-		obj1.operation("-");
+		//obj1.operation("-");
 		cout << obj1.getNum1() << endl;
 		cout << obj1.getNum2() << endl;
 		cout << obj1.result() << endl;
