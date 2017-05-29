@@ -242,6 +242,79 @@ string BIR::removeZero(string str){
 // Multiplication Function
 void BIR::multiplication(){
 	// Multiplication Logic goes here
+	int count=0;
+	if(n1[0]=='+')
+		count++;
+	if(n2[0]=='+')
+		count++;
+	string::iterator itx=n1.end()-1,itz1,itz2;
+	int a,b,pro,carry1=0,carry2=0;
+	while(itx!=n1.begin()){
+		a=(*itx)-'0';
+		string::iterator ity=n2.end()-1;
+		while(ity!=n2.begin()){
+			b=(*ity)-'0';
+			pro=a*b+carry1;			
+			carry1=pro/10;
+			pro=pro%10;
+			if(res==""){
+				res+=pro+'0';
+				itz1=res.begin(); itz2=res.begin();
+			}else{
+				if(itz1==res.end()){
+					res+=pro+'0';
+				}else{
+					char ch;
+					ch=(*itz1)+carry2+pro;
+					if(ch>'9'){
+						carry2=1;
+						ch-=10;
+					}else{
+						carry2=0;
+					}
+					if(itz1==res.end()){
+						res+=ch+'0';
+					}else{
+						res.erase(itz1);
+						res.insert(itz1,ch);
+					}
+				}
+			}
+			++itz1;
+			--ity;
+		}
+		string::iterator it=itz1;
+		while(carry1){
+			res+=(carry1%10)+'0';
+			carry1/=10;
+			++itz1;
+		}
+		while(carry2){
+			char ch;
+			ch=(*it)+carry2;
+			if(ch>'9'){
+				carry2=1;
+				ch-=10;
+			}else{
+				carry2=0;
+			}
+			if(it==res.end()){
+				res+=ch+'0';
+			}else{
+				res.erase(it);
+				res.insert(it,ch);
+			}
+			++it;
+		}
+		++itz2;	
+		itz1=itz2;	
+		--itx;
+	}
+	reverse(res.begin(),res.end());
+	if(count%2==0)
+		res='+'+res;
+	else
+		res='-'+res;
 	
 }
 void BIR::firstBig(){
