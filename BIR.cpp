@@ -74,6 +74,14 @@ int BIR::input(){
 	string str;
 	cin >> str;	
 	try{
+		
+	// To detect input type
+	// 1. single line 
+	// 2. multi-line
+	// To detect input number type
+	// 1. No sign / single sign
+	// 2. No sign / multi sing
+
 	// to check it is one-line or not
 	if(INLINE_INPUT==true){
 		if(MSIGNED==true){
@@ -183,13 +191,6 @@ void BIR::initOperation(){
 }
 bool BIR::validation(){
 	try{
-		// To detect input type
-		// 1. single line 
-		// 2. multi-line
-		// To detect input number type
-		// 1. No sign / single sign
-		// 2. No sign / multi sing
-
 		if(!val.isMultiSignNumber(n1)){
 			throw ERRORH("Num1 is Not Valid");	
 		}	
