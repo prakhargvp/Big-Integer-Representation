@@ -14,7 +14,7 @@ class BIR{
 	// Declaration
 	// Constructor
 	BIR(){
-		n1 = n2 = res = "";
+		n1 = n2 = res = inlineStr = "";
 		op = '+';
 		VALID valObj;
 	}
@@ -26,6 +26,7 @@ class BIR{
 		n1 = a;
 		n2 = b;
 		op = '+';
+		inlineStr = "";
 	}
 	// To read input from user
 	int input();
@@ -67,7 +68,68 @@ string BIR::getNum2(){
 	return n2;
 }
 int BIR::input(){
-	
+	// Input a string
+	int isOk=0;
+	string str;
+	cin >> str;	
+	// to check it is one-line or not
+	if(INLINE_INPUT==true){
+		if(MSIGNED==true){
+			isOk = val.isMultiSignWithOperation(str);	
+		}	
+		if(isOk==0 && SIGNED==true){
+			isOk = val.isSingleSignWithOperation(str);
+		}
+		if(isOk==0){
+			isOk = val.isNumberWithOperation(str);
+		}
+		if(isOk==1){
+			split(str);
+		}
+	}
+	if(isOk==0 && MULTILINE_INPUT==true){
+		// First number input
+		if(MSIGNED==true){
+			isOk = val.isMultiSignNumber(str);	
+		}	
+		if(isOk==0 && SIGNED==true){
+			isOk = val.isSingleSignNumber(str);
+		}
+		if(isOk==0){
+			isOk = val.isNumber(str);
+		}
+		// if first number is correct
+		if(isOk==1){
+			n1 = str;
+			// input second string
+			cin >> str;
+			isOk = 0;
+			// second number input
+			if(MSIGNED==true){
+				isOk = val.isMultiSignNumber(str);	
+			}	
+			if(isOk==0 && SIGNED==true){
+				isOk = val.isSingleSignNumber(str);
+			}
+			if(isOk==0){
+				isOk = val.isNumber(str);
+			}
+		}
+		// if second number is correct then input operator
+		if(isOk==1){
+			n2 = str;
+			isOk = 0;
+			cin >> str;
+			if(val.isOperator(str)){
+				op = str;
+				isOk = 1;
+			}
+		}
+	}
+	if(isOk){
+		initOperation();
+	}
+	return isOk;
 }
 int BIR::read(string str1,string str2,string op1){
 	try{
@@ -120,9 +182,6 @@ bool BIR::validation(){
 		// To detect input number type
 		// 1. No sign / single sign
 		// 2. No sign / multi sing
-		if(MULTILINE_INPUT==true){
-				
-		}
 
 		if(!val.isMultiSignNumber(n1)){
 			throw ERRORH("Num1 is Not Valid");	
@@ -139,6 +198,25 @@ bool BIR::validation(){
 	}
 
 }
+/*
+bool BIR::validation(string s){
+	int isOk=1;
+
+	if(INLINE_INPUT==true){
+		val.isMultiSignWithOperation(s);	
+	}else if(MULTILINE_INPUT==true){
+		val.isMultiSignNumber(s);	
+	}
+	
+	if(MSIGNED==true){
+	
+	}else if(SIGNED==true){
+	
+	}else{
+	
+	}
+}
+*/
 void BIR::resolveSign(){
 	n1 = resolveSign(n1);
 	n2 = resolveSign(n2);
@@ -332,6 +410,9 @@ void BIR::multiplication(){
 	}
 	reverse(res.begin(),res.end());
 	res = removeZero(res);
+	if(res.size()==0){
+		res = '0';
+	}
 	if((n1[0]=='-' && n2[0]=='-') || (n1[0]=='+' && n2[0]=='+')){
 		res = '+' + res;
 	}else{
@@ -381,5 +462,8 @@ void BIR::subtraction(){
 
 		reverse(res.begin(),res.end());
 		res = removeZero(res);
+		if(res.size()==0){
+			res = '0';
+		}
 		res =  n1[0] + res;
 }
