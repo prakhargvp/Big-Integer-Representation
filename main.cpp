@@ -1,8 +1,7 @@
 #include<iostream>
+#include<stdio.h>
 #include "BIR.cpp"
 using namespace std;
-#include<stdio.h>
-#include "header.h"
 int main(int argc,char *argv[]){
 	int ch=0,imode,omode;
 	FILE *fin=NULL,*fout=NULL;
