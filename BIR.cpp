@@ -241,80 +241,54 @@ string BIR::removeZero(string str){
 // Multiplication Function
 void BIR::multiplication(){
 	// Multiplication Logic goes here
-	int count=0;
-	if(n1[0]=='+')
-		count++;
-	if(n2[0]=='+')
-		count++;
-	string::iterator itx=n1.end()-1,itz1,itz2,ity,it;
-	int a,b,pro,carry1=0,carry2=0;
-	while(itx!=n1.begin()){
-		a=(*itx)-'0';
-		ity=n2.end()-1;
-		while(ity!=n2.begin()){
-			b=(*ity)-'0';
-			pro=a*b+carry1;			
-			carry1=pro/10;
-			pro=pro%10;
-			if(res==""){
-				res+=pro+'0';
-				itz1=res.begin(); itz2=res.begin();
-			}else{
-				if(itz1==res.end()){
-					res+=pro+'0';
-				}else{
-					char ch;
-					ch=(*itz1)+carry2+pro;
-					if(ch>'9'){
-						carry2=1;
-						ch-=10;
-					}else{
-						carry2=0;
-					}
-					if(itz1==res.end()){
-						res+=ch+'0';
-					}else{
-						res.erase(itz1);
-						res.insert(itz1,ch);
-					}
-				}
+	string::iterator it1,it2, itr, itrt;
+	int rem, mul, carry, a, b;
+
+	it2 = n2.end() - 1;
+	res = "0";
+	// Number of Digits in Product of two numbers, A & B
+	// = Floor (Log (A) + Log(B)) + 1
+	// pre determine the size of result in multiplication
+	// because resize in mid of program might invalidate all iterators pointing into the vector.
+	res.resize( n1.size() + n2.size() + 1 ,'0');
+
+	itr = res.begin();
+	
+	while(it2!=n2.begin()){
+        	it1 = n1.end() - 1;	
+		carry = 0;
+		//res = "";
+		itrt = itr;
+		while(it1!=n1.begin()){	
+			a = (*it1 - '0');
+			b = (*it2 - '0');
+			mul = a * b + carry;
+			if(it2!=n2.end()-1){
+				mul += (*itrt - '0');
 			}
-			++itz1;
-			--ity;
+
+			rem = mul%10;
+			carry = mul/10;
+			(*itrt) = rem + '0'; 	
+		--it1;
+		++itrt;
 		}
-		it=itz1;
-		while(carry1){
-			res+=(carry1%10)+'0';
-			carry1/=10;
-			++itz1;
+		while(carry>0){
+			a = *itrt - '0' + carry;
+			(*itrt) = a + '0';	
+			carry = a/10;
+		++itrt;
 		}
-		while(carry2){
-			char ch;
-			ch=(*it)+carry2;
-			if(ch>'9'){
-				carry2=1;
-				ch-=10;
-			}else{
-				carry2=0;
-			}
-			if(it==res.end()){
-				res+=ch+'0';
-			}else{
-				res.erase(it);
-				res.insert(it,ch);
-			}
-			++it;
-		}
-		++itz2;	
-		itz1=itz2;	
-		--itx;
+		itr++;
+	--it2;	
 	}
 	reverse(res.begin(),res.end());
-	if(count%2==0)
-		res='+'+res;
-	else
-		res='-'+res;
-	
+	res = removeZero(res);
+	if((n1[0]=='-' && n2[0]=='-') || (n1[0]=='+' && n2[0]=='+')){
+		res = '+' + res;
+	}else{
+		res = '-' + res;
+	}
 }
 void BIR::firstBig(){
 	try{
