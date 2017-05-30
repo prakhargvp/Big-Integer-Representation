@@ -7,6 +7,7 @@ int main(int argc,char *argv[]){
 	int ch=0,imode,omode,r_option;
 	FILE *fin=NULL,*fout=NULL;
 	char input_file[100],output_file[100];
+	BIR ob;
 	if(argc > 1){
 		strcpy(input_file,argv[1]);
 		if(fopen(input_file,"r")==NULL){
@@ -49,21 +50,28 @@ int main(int argc,char *argv[]){
 		cout << "<Executable filename>  <input_filename>  " << endl;
 		cout << "<Executable filename>  <input_filename>  <output_filename>"<< endl;
 	}else{
-		BIR ob;
 		if(imode==1){
 			fin=freopen(input_file,"r",stdin);
-		}
-		do{
-			r_option=ob.input();
-		}while(r_option!=1 || r_option!=0);
-		if(imode==1){
+			do{
+				r_option=ob.input();
+			}while(r_option!=1 && r_option!=0);
+			if(r_option){
+				cout << ob.getNum1() << endl;
+				cout << ob.getNum2() << endl;
+				cout << ob.result() << endl;
+			}
 			fclose(fin);
+		}else{
+			do{
+				r_option=ob.input();
+			}while(r_option!=1 && r_option!=0);
+			if(r_option){
+				cout << ob.getNum1() << endl;
+				cout << ob.getNum2() << endl;
+			}
 		}
 		if(omode==1){
 			fout=freopen(output_file,"w",stdout);
-		}
-		ob.result();
-		if(omode==1){
 			fclose(fout);
 		}
 	}

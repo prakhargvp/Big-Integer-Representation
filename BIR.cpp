@@ -20,12 +20,12 @@ class BIR{
 	}
 	BIR(string str){
 		// To split str into 2 numbers	
-		op = '+';
+		read(str);	
 	}
-	BIR(string a, string b){
+	BIR(string a, string b, string op1){
 		n1 = a;
 		n2 = b;
-		op = '+';
+		op = op1;
 		inlineStr = "";
 	}
 	// To read input from user
@@ -69,9 +69,11 @@ string BIR::getNum2(){
 }
 int BIR::input(){
 	// Input a string
+	
 	int isOk=0;
 	string str;
 	cin >> str;	
+	try{
 	// to check it is one-line or not
 	if(INLINE_INPUT==true){
 		if(MSIGNED==true){
@@ -128,6 +130,11 @@ int BIR::input(){
 	}
 	if(isOk){
 		initOperation();
+	}else{
+		throw ERRORH("Invalid Input");	
+	}
+	}catch(ERRORH err){
+		err.print();
 	}
 	return isOk;
 }
