@@ -20,7 +20,7 @@ int main(int argc,char *argv[]){
 			strcpy(output_file,argv[2]);
 			omode=1;
 		}else{
-			omode=0;	
+			omode=0;
 		}
 	}else{
 		cout << "Select the Mode : \n";
@@ -30,6 +30,7 @@ int main(int argc,char *argv[]){
 			if(imode==1){
 				do{
 					cout << "Enter File : ";
+					cin.ignore();
 					cin.getline(input_file,100);
 				}while(fopen(input_file,"r")==NULL);
 			}
@@ -39,6 +40,7 @@ int main(int argc,char *argv[]){
 			cin >> omode;
 			if(omode==1){
 				cout << "Enter File : ";
+				cin.ignore();
 				cin.getline(output_file,100);
 			}
 		}while(omode!=0 && omode!=1);
@@ -55,24 +57,20 @@ int main(int argc,char *argv[]){
 			do{
 				r_option=ob.input();
 			}while(r_option!=1 && r_option!=0);
-			if(r_option){
-				cout << ob.getNum1() << endl;
-				cout << ob.getNum2() << endl;
-				cout << ob.result() << endl;
-			}
 			fclose(fin);
 		}else{
 			do{
 				r_option=ob.input();
 			}while(r_option!=1 && r_option!=0);
-			if(r_option){
-				cout << ob.getNum1() << endl;
-				cout << ob.getNum2() << endl;
-			}
 		}
-		if(omode==1){
-			fout=freopen(output_file,"w",stdout);
-			fclose(fout);
+		if(r_option==1){
+            if(omode==1){
+                fout=freopen(output_file,"w",stdout);
+                cout << ob.result() << endl;
+                fclose(fout);
+            }else{
+                cout << ob.result() << endl;
+            }
 		}
 	}
 return 0;
