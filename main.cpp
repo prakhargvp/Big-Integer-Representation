@@ -1,13 +1,14 @@
 #include<iostream>
 #include<stdio.h>
+#include<string.h>
 #include "BIR.cpp"
 using namespace std;
 int main(int argc,char *argv[]){
-	int ch=0,imode,omode;
+	int ch=0,imode,omode,r_option;
 	FILE *fin=NULL,*fout=NULL;
-	string input_file[100],output_file[100];
+	char input_file[100],output_file[100];
 	if(argc > 1){
-		input_file=argv[1];
+		strcpy(input_file,argv[1]);
 		if(fopen(input_file,"r")==NULL){
 			cout << "Invalid Input File\n";
 			return 0;
@@ -15,7 +16,7 @@ int main(int argc,char *argv[]){
 			imode=1;
 		}
 		if(argc > 2){
-			output_file=argv[2];
+			strcpy(output_file,argv[2]);
 			omode=1;
 		}else{
 			omode=0;	
@@ -28,7 +29,7 @@ int main(int argc,char *argv[]){
 			if(imode==1){
 				do{
 					cout << "Enter File : ";
-					getline(cin,input_file);
+					cin.getline(input_file,100);
 				}while(fopen(input_file,"r")==NULL);
 			}
 		}while(imode!=0 && imode!=1);
@@ -37,7 +38,7 @@ int main(int argc,char *argv[]){
 			cin >> omode;
 			if(omode==1){
 				cout << "Enter File : ";
-				getline(cin,output_file);
+				cin.getline(output_file,100);
 			}
 		}while(omode!=0 && omode!=1);
 	}
@@ -58,11 +59,11 @@ int main(int argc,char *argv[]){
 		if(imode==1){
 			fclose(fin);
 		}
-		if(0mode==1){
+		if(omode==1){
 			fout=freopen(output_file,"w",stdout);
 		}
 		ob.result();
-		if(0mode==1){
+		if(omode==1){
 			fclose(fout);
 		}
 	}
