@@ -41,29 +41,30 @@ int main(int argc,char *argv[]){
 			}
 		}while(omode!=0 && omode!=1);
 	}
-	BIR ob;
-	if(imode==1){
-		fin=freopen(input_file,"r",stdin);
-	}
-	do{
-		r_option=ob.input();
-	}while(r_option!=1 || r_option!=0);
-	if(0mode==1){
-		fin=freopen(output_file,"w",stdout);
-	}
-	ob.result();
-	if(imode==1){
-		fclose(fin);
-	}
-	if(0mode==1){
-		fclose(fout);
-	}
 	if(argc>3){
 		cout << "\t\tWRONG INPUT" << endl;
 		cout << "Input format should be in following manner" << endl << endl;
 		cout << "<Executable filename>" << endl;
 		cout << "<Executable filename>  <input_filename>  " << endl;
 		cout << "<Executable filename>  <input_filename>  <output_filename>"<< endl;
+	}else{
+		BIR ob;
+		if(imode==1){
+			fin=freopen(input_file,"r",stdin);
+		}
+		do{
+			r_option=ob.input();
+		}while(r_option!=1 || r_option!=0);
+		if(imode==1){
+			fclose(fin);
+		}
+		if(0mode==1){
+			fout=freopen(output_file,"w",stdout);
+		}
+		ob.result();
+		if(0mode==1){
+			fclose(fout);
+		}
 	}
 return 0;
 }
