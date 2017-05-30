@@ -6,7 +6,7 @@
 using namespace std;
 class BIR{
 	private: 
-	string n1,n2,res;
+	string n1,n2,res,inlineStr;
 	string op;	// operation
 	int e;
 	VALID val;	// Validation Object
@@ -27,6 +27,8 @@ class BIR{
 		n2 = b;
 		op = '+';
 	}
+	// To read input from user
+	int input();
 	// To read input from main
 	int read(string);
 	int read(string,string,string);
@@ -64,18 +66,14 @@ string BIR::getNum1(){
 string BIR::getNum2(){
 	return n2;
 }
-
+int BIR::input(){
+	
+}
 int BIR::read(string str1,string str2,string op1){
 	try{
-		if(!val.isMultiSignNumber(str1)){
-			throw ERRORH("Str1 is Not Valid");	
-		}	
-		if(!val.isMultiSignNumber(str2)){
-			throw ERRORH("Str2 is Not Valid");	
-		}
-		if(val.isOperator(op1)){
-			throw ERRORH("Operator is not Valid");	
-		}
+		n1 = str1;
+		n2 = str2;
+		op = op1;
 		//1. validation
 		//2. resolve sign
 		//3. first numebr is greate or equal to second
@@ -88,6 +86,7 @@ int BIR::read(string str1,string str2,string op1){
 int BIR::read(string str){
 
 	try{
+		inlineStr = str;
 		if(!val.isMultiSignWithOperation(str)){
 			throw ERRORH("Not Valid String : ");
 		}
@@ -113,6 +112,75 @@ void BIR::initOperation(){
 	// first number be greate than or equal to second one
 	firstBig();
 }
+bool BIR::validation(){
+	try{
+		// To detect input type
+		// 1. single line 
+		// 2. multi-line
+		// To detect input number type
+		// 1. No sign / single sign
+		// 2. No sign / multi sing
+		if(MULTILINE_INPUT==true){
+				
+		}
+
+		if(!val.isMultiSignNumber(n1)){
+			throw ERRORH("Num1 is Not Valid");	
+		}	
+		if(!val.isMultiSignNumber(n2)){
+			throw ERRORH("Num2 is Not Valid");	
+		}
+		if(!val.isOperator(op)){
+			throw ERRORH("Operator is not Valid");	
+		}
+
+	}catch(ERRORH err){
+		err.print();	
+	}
+
+}
+void BIR::resolveSign(){
+	n1 = resolveSign(n1);
+	n2 = resolveSign(n2);
+}
+string BIR::resolveSign(string str){
+	string::iterator it1;
+	it1 = str.begin();
+	char op1='+';
+	while(it1!=str.end() && (*it1=='+' || *it1=='-')){
+
+		if((*it1=='-' && op1=='+') || (*it1=='+' && op1=='-')){
+			op1 = '-';	
+		}else{
+			op1 = '+';
+		}	
+		it1++;
+	}
+	str = op1 + string(it1, str.end());
+return str;
+}
+void BIR::firstBig(){
+	try{
+		string::iterator itx=n1.begin() + 1,ity=n2.begin() + 1;
+
+		if(n2.size()>n1.size()){
+			swap(n1,n2);
+		}else if(n1.size()==n2.size()){
+			
+			while(*itx == *ity && itx!=n1.end()){
+				itx++;
+				ity++;
+			}
+			if(*itx < *ity){
+				// Code for swap
+				// x is greater & y is smaller
+				swap(n1,n2);	
+			}
+		}
+	}catch(...){
+	
+	}
+}
 void BIR::split(string str){
 	// split number1 operation number2
 	string::iterator it1= str.begin();
@@ -136,33 +204,25 @@ void BIR::split(string str){
 		it1++;
 	}
 }
-bool BIR::validation(){
 
-}
 // Operation
 void BIR::operation(string opr){
 	op = opr;
 }
 //
-void BIR::resolveSign(){
-	n1 = resolveSign(n1);
-	n2 = resolveSign(n2);
-}
-string BIR::resolveSign(string str){
-	string::iterator it1;
-	it1 = str.begin();
-	char op1='+';
-	while(it1!=str.end() && (*it1=='+' || *it1=='-')){
-
-		if((*it1=='-' && op1=='+') || (*it1=='+' && op1=='-')){
-			op1 = '-';	
+string BIR::removeZero(string str){
+	int i = 0;
+	while(i<str.size()){
+		//cout << str <<endl;
+		if(str[0]=='0'){
+		//		cout << str[i] << endl;
+			str.erase(str.begin()+i,str.begin()+i+1);
+		//	cout << "After erase" <<str <<endl;
 		}else{
-			op1 = '+';
-		}	
-		it1++;
+			break;
+		}
 	}
-	str = op1 + string(it1, str.end());
-return str;
+	return str;
 }
 // Result
 string BIR::result(){
@@ -187,6 +247,7 @@ string BIR::result(){
 	}
 	return res;
 }
+
 // Addition Function
 void BIR::addition(){
 	// Addition Logic goes here
@@ -223,20 +284,7 @@ void BIR::addition(){
 		res=n1[0]+res;
 }
 
-string BIR::removeZero(string str){
-	int i = 0;
-	while(i<str.size()){
-		//cout << str <<endl;
-		if(str[0]=='0'){
-		//		cout << str[i] << endl;
-			str.erase(str.begin()+i,str.begin()+i+1);
-		//	cout << "After erase" <<str <<endl;
-		}else{
-			break;
-		}
-	}
-	return str;
-}
+
 
 // Multiplication Function
 void BIR::multiplication(){
@@ -290,28 +338,7 @@ void BIR::multiplication(){
 		res = '-' + res;
 	}
 }
-void BIR::firstBig(){
-	try{
-		string::iterator itx=n1.begin() + 1,ity=n2.begin() + 1;
 
-		if(n2.size()>n1.size()){
-			swap(n1,n2);
-		}else if(n1.size()==n2.size()){
-			
-			while(*itx == *ity && itx!=n1.end()){
-				itx++;
-				ity++;
-			}
-			if(*itx < *ity){
-				// Code for swap
-				// x is greater & y is smaller
-				swap(n1,n2);	
-			}
-		}
-	}catch(...){
-	
-	}
-}
 // Subtraction Function
 void BIR::subtraction(){
 

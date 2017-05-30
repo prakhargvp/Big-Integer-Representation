@@ -33,6 +33,19 @@ class VALID{
 		regex reg("[0-9]+");
 		return is_match<T>(reg,str);
 	}
+	template <typename T>
+	int isSingleSignNumber(T str){
+		regex reg("[+-]?[0-9]+");	
+		return is_match<T>(reg,str);
+	}
+	// 123*1231 = true
+	// +12312/+123 = true
+
+	template <typename T>
+	int isSingleSignWithOperation(T str){
+		regex reg("[+-]?[0-9]+[*/+-][+-]?[0-9]+");	
+		return is_match<T>(reg,str);
+	}
 
 	template <typename T>
 	int isMultiSignNumber(T str){
