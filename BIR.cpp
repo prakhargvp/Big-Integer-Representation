@@ -37,15 +37,20 @@ class BIR{
 	string removeZero(string);
 	// To return output result
 	string result();
-	//
+	/*
+	 * 1. To check Validation
+	 * 2. Resolve Sign
+	 * 3. First number is greater than or equal to Second
+	 */
 	void initOperation();		
-	//
+	// To Split a string having Two Numbers with Operation
+	// Number1OpeartionNumber2
 	void split(string);
-	//
+	// To validate the numbers and operators
 	bool validation();
-	// Resolve Sign
-
+	// Resolve + & - Signs of number1 & number2
 	void resolveSign();
+	// Resolve 
 	string resolveSign(string);
 	//o
 	void firstBig();
@@ -206,25 +211,6 @@ bool BIR::validation(){
 	}
 
 }
-/*
-bool BIR::validation(string s){
-	int isOk=1;
-
-	if(INLINE_INPUT==true){
-		val.isMultiSignWithOperation(s);	
-	}else if(MULTILINE_INPUT==true){
-		val.isMultiSignNumber(s);	
-	}
-	
-	if(MSIGNED==true){
-	
-	}else if(SIGNED==true){
-	
-	}else{
-	
-	}
-}
-*/
 void BIR::resolveSign(){
 	n1 = resolveSign(n1);
 	n2 = resolveSign(n2);
