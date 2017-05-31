@@ -191,8 +191,6 @@ void BIR::initOperation(){
 	validation();
 	// resolve the signs
 	resolveSign();
-	// first number be greate than or equal to second one
-	firstBig();
 }
 bool BIR::validation(){
 	try{
@@ -324,6 +322,8 @@ string BIR::result(){
 void BIR::addition(){
 	// Addition Logic goes here
 	char ch1,ch2,ch;
+	// first number be greate than or equal to second one
+	firstBig();
 	int rem=0;
 		string::iterator itx=n1.end()-1,ity=n2.end()-1;
 		while(ity!=n2.begin()){
@@ -363,7 +363,8 @@ void BIR::multiplication(){
 	// Multiplication Logic goes here
 	string::iterator it1,it2, itr, itrt;
 	int rem, mul, carry, a, b;
-
+	// first number be greate than or equal to second one
+	firstBig();
 	it2 = n2.end() - 1;
 	res = "0";
 	// Number of Digits in Product of two numbers, A & B
@@ -416,48 +417,55 @@ void BIR::multiplication(){
 
 // Subtraction Function
 void BIR::subtraction(){
-
 	int borrow=0;
 	char a, b;
-	
-		string::iterator itx=n1.end() - 1,ity=n2.end() - 1;
+	char sign;
+	if(n2[0]=='+')
+		sign='-';
+	else sign='+';
+	n2.erase(0,1);
+	n2=sign+n2;
+	// first number be greate than or equal to second one
+	firstBig();
+	string::iterator itx=n1.end() - 1,ity=n2.end() - 1;
 
-		while(ity!=n2.begin()){
+	while(ity!=n2.begin()){
 
-			b = (*ity);
-			a = (*itx);		
+		b = (*ity);
+		a = (*itx);		
 
-			if(a < b){
-				*(ity - 1) += 1;
-				a += 10;
-				if(ity == n2.begin()+1){
-					borrow = 1;
-				}
+		if(a < b){
+			*(ity - 1) += 1;
+			a += 10;
+			if(ity == n2.begin()+1){
+				borrow = 1;
 			}
-			a = a - b + '0';
-			res = res + a;
+		}
+		a = a - b + '0';
+		res = res + a;
 
-			--itx;
-			--ity;
-		}
-		while(itx!=n1.begin()){
-			a = *itx;
-			if(borrow){
-				if(a=='0'){
-					a = '9';
-				}else{
-					a = a - 1;			
-					borrow = 0;
-				}
-			}	
-			res = res + a;	
-			--itx;
-		}
+		--itx;
+		--ity;
+	}
+	while(itx!=n1.begin()){
+		a = *itx;
+		if(borrow){
+			if(a=='0'){
+				a = '9';
+			}else{
+				a = a - 1;			
+				borrow = 0;
+			}
+		}	
+		res = res + a;	
+		--itx;
+	}
 
-		reverse(res.begin(),res.end());
-		res = removeZero(res);
-		if(res.size()==0){
-			res = '0';
-		}
+	reverse(res.begin(),res.end());
+	res = removeZero(res);
+	if(res.size()==0){
+		res = '0';
+	}else{
 		res =  n1[0] + res;
+	}
 }
