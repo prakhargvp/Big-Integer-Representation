@@ -23,7 +23,7 @@ Description :
 #### Prerequisites :
 
       •	A 32-bit or 64-bit operating system(like Ubuntu, Windows or mac.......)
-      •	C++ compiler like g++ and using c++11 version of g++ compiler for stoi function.
+      •	C++ compiler like g++ and using c++11 version of g++ compiler for regex.
 
 #### Running :
 
@@ -36,7 +36,10 @@ Description :
 
       On Dos :
             •	First set the path of IDE.
-            •	Open Command Prompt and type $g++ -std=c++11 <Program_name.cpp> -o <exe_filename>
-            •	<exe_filename>
+            •	Open Command Prompt and type $g++ -std=c++11 <Program_name.cpp> -o <exe_filename> (To compile program)
+            •	FOR RUNNING PROGRAM TYPE ANY OF THE FOLLOWING SEQUENCE:-
+                •	<exe_filename> <input_file> <output_file>
+                •	<exe_filename> <input_file>
+                •	<exe_filename>
 
 
