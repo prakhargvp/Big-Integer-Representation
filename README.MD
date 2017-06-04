@@ -38,8 +38,8 @@ Description :
             •	First set the path of IDE.
             •	Open Command Prompt and type $g++ -std=c++11 <Program_name.cpp> -o <exe_filename> (To compile program)
             •	FOR RUNNING PROGRAM TYPE ANY OF THE FOLLOWING SEQUENCE:-
-                •	<exe_filename> <input_file> <output_file>
-                •	<exe_filename> <input_file>
-                •	<exe_filename>
+                        •	<exe_filename> <input_file> <output_file>
+                        •	<exe_filename> <input_file>
+                        •	<exe_filename>
 
 
